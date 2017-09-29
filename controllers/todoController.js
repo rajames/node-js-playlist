@@ -1,26 +1,8 @@
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+var Todo = require('../models/todo.js');
 
-// use the native Promise
-// this eliminates the deprecationWarning by mongoose of using the default
-// promise; mpromise;
-mongoose.Promise = global.Promise;
-
-// connect to the database
-mongoose.connect('mongodb://test:test1234@ds151544.mlab.com:51544/mytodo', {useMongoClient: true}, function(err) {
-  if (err) throw err;
-  console.log('connected to database successfully!');
-});
-
-// create a schema - a blueprint
-var todoSchema = new mongoose.Schema({
-  item: String
-});
-
-// create a model that uses the above Schema.
-// Todo : The collection
-var Todo = mongoose.model('Todo', todoSchema);
-
+// create middleware for parsing the body of http post request using
+// body-parser
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = function (app) {
